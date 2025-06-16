@@ -122,3 +122,22 @@ class HeatWaveAnalyzer:
         excess_temp = heat_wave_data['temp_max'] - heat_wave_data['threshold']
         hwmid = excess_temp.sum()
         return hwmid
+    
+    def generate_climate_report(self):
+        """Gera um relatório climático com estatisticas das ondas de calor."""
+        if self.heat_waves is None:
+            self.detect_heat_waves()
+        report = {
+            'total_heat_waves': len(self.heat_waves),
+            'avg_duration': self.heat_waves['duration'].mean(),
+            'max_duration': self.heat_waves['duration'].max(),
+            'avg_intesity': self.heat_waves['intensity'].mean(),
+            'max_intensity': self.heat_waves['intensity'].max(),
+            'avg_hwmid': self.heat_waves['hwmid'].mean(),
+            'max_hwmid': self.heat_waves['hwmid'].max(),
+            'annual_frequency': self._calculate_annual_frequency(),
+            'decadal_trend': self._calculate_decadal_trend(),
+            'monthly_distribution': self._calculate_monthly_distribution()   
+        }
+        self.climate_report = report
+        return report
