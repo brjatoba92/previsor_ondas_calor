@@ -44,3 +44,40 @@ class HeatWaveAnalyzer:
 
         # Calcula o percentil movel para definir o limiar de temperatura
         self._calculate_thresholds()
+    
+    def _calculate_thresholds(self, window_size=15):
+        """
+        Calcula o limiar de temperatura para cada dia do ano usando uma janela móvel.
+        
+        Args:
+            window_size (int): Tamanho da janela em dias para calcular o percentil (padrão: 15)
+        """
+        thresholds = []
+
+        for day in range(1, 367): # para cada dia do ano
+            
+            # Define a janela ao redor do dia do ano (considerando anos bissextos)
+            window_start = max(1, day - window_size)
+            window_end = min(366, day + window_size)
+
+            # Filtra os dados da janela
+            window_data = self.data[
+                (self.data['day_of_year'] >= window_start) & 
+                (self.data['day_of_year'] <= window_end)
+            ]['temp_max']
+
+            if not window_data.empty:
+                threshold = np.percentile(window_data, self.threshold_percentile)
+                thresholds.append(threshold)
+            else:
+                thresholds.append(np.nan)
+        
+        # Cria um DataFrame com os limiares por dia do ano
+        self.thresholds = pd.DataFrame({
+            'day_of_year': range(1, 367),
+            'threshold': thresholds
+        })
+
+        # Merge com os dados originais
+        self.data = pd.merge(self.data, self.thresholds, on='day_of_year', how='left')
+
