@@ -141,3 +141,33 @@ class HeatWaveAnalyzer:
         }
         self.climate_report = report
         return report
+    
+    def _calculate_annual_frequency(self):
+        """Calcula a frequência anual de ondas de calor."""
+        return self.heat_waves.groupby('year').size().reset_index(name='count')
+    
+    def _calculate_decadal_trend(self):
+        """Calcula tendências decadais nas características das ondas de calor."""
+        self.heat_waves['decade'] = self.heat_waves['year'] // 10 * 10
+        trends = self.heat_waves.groupby('decade').agg({
+            'duration': 'mean',
+            'intensity': 'mean',
+            'hwmid': 'mean',
+            'year': 'count'
+        }).rename(columns={
+            'year': 'count'
+        })
+        return trends
+    
+    def _calculate_monthly_distribution(self):
+        """Calcula a distribuição mensal das ondas de calor."""
+        monthly = []
+        for _, hw in self.heat_waves.iterrows():
+            date_range = pd.date_range(hw['start_date'], hw['end_date'])
+            months = pd.Series([d.month for d in date_range])
+            monthly.extend(months.value_counts().items())
+        
+        monthly_df = pd.DataFrame(monthly, columns=['month', 'days'])
+        monthly_df = monthly_df.groupby('month').sum().reindex(range(1,13), fill_value=0)
+        monthly_df['month_name'] = monthly_df.index.map(lambda x: calendar.month_abbr[x])
+        return monthly_df
