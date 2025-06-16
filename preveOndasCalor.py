@@ -81,3 +81,44 @@ class HeatWaveAnalyzer:
         # Merge com os dados originais
         self.data = pd.merge(self.data, self.thresholds, on='day_of_year', how='left')
 
+    def detect_heat_waves(self):
+        """Detecta períodos de onda de calor com base nos critérios definidos."""
+        # Identifica dias acima do limiar
+        self.data['above_threshold'] = self.data['temp_max'] > self.data['threshold']
+        # Identifica períodos consecutivos
+        self.data['group'] = (self.data['above_threshold'] != self.data['above_threshold'].shift()).cumsum()
+        # Agrupa periodos consecutivos
+        heat_wave_candidates = self.data[self.data['above_threshold']].groupby('group')
+
+        # Filtra apenas os periodos com duração minima
+        heat_waves = []
+        for name, group in heat_wave_candidates:
+            if len(group) >= self.min_consecutive_days:
+                start_date = group['date'].min()
+                end_date = group['date'].max()
+                duration = (end_date - start_date).days + 1
+                max_temp = group['temp_max'].max()
+                mean_temp = group['temp_max'].mean()
+                intensity = group['temp_max'].sum() - group['threshold'].sum()
+
+                # Calcula o HWMId (Heat Wave Magnitude Index daily)
+                hwmid = self._calculate_hwmid(group)
+
+                heat_waves.append({
+                    'start_date': start_date,
+                    'end_date': end_date,
+                    'duration': duration,
+                    'max_temp': max_temp,
+                    'mean_temp': mean_temp,
+                    'intensity': intensity,
+                    'hwmid': hwmid,
+                    'year': start_date.year
+                })
+            self.heat_waves = pd.DataFrame(heat_waves)
+            return self.heat_waves
+    
+    def _calculate_hwmid(self, heat_wave_data):
+        """Calcula o HWMId (Heat Wave Magnitude Index daily)."""
+        excess_temp = heat_wave_data['temp_max'] - heat_wave_data['threshold']
+        hwmid = excess_temp.sum()
+        return hwmid
