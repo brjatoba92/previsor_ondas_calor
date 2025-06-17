@@ -6,7 +6,7 @@
 - [![Seaborn](https://img.shields.io/badge/Seaborn-0.11%2B-red)](https://seaborn.pydata.org/)  
 - [![SciPy](https://img.shields.io/badge/SciPy-1.7%2B-blueviolet)](https://www.scipy.org/)
 
-O **Heat Wave Analyzer** é uma solução científica completa para detecção, análise e visualização de ondas de calor em séries temporais climáticas. Desenvolvido para pesquisadores, meteorologistas e cientistas de dados, este pacote oferece ferramentas robustas para estudar eventos de calor extremo com rigor acadêmico.
+O **Heat Wave Analyzer** é uma solução científica completa para detecção, análise e visualização de ondas de calor em séries temporais climáticas. Desenvolvido para pesquisadores, meteorologistas e cientistas de dados, este projeto oferece ferramentas robustas para estudar eventos de calor extremo com rigor acadêmico.
 
 ## 📌 Índice
 
@@ -59,17 +59,15 @@ O **Heat Wave Analyzer** é uma solução científica completa para detecção, 
     Estrutura organizada em diretórios
 
 ## ⚙️ Instalação
-Pré-requisitos
+### Pré-requisitos
 
     Python 3.8 ou superior
 
     pip (gerenciador de pacotes Python)
 
-Passo a Passo
+### Passo a Passo
 
-    Clone o repositório:
-
-Passo a Passo
+ Clone o repositório
 
     git clone https://github.com/brjatoba92/previsor_ondas_calor.git 
     cd heat-wave-analyzer 
@@ -89,21 +87,19 @@ Instale as dependências:
 Estrutura Básica dos Dados
 
 Seu arquivo de dados deve conter:
+
     Coluna date (datetime): datas das observações
 
     Coluna temp_max (float): temperaturas máximas diárias
 
-Exemplo mínimo:
-    csv
+Exemplo mínimo - csv:
 
     date,temp_max
     1980-01-01,28.5
     1980-01-02,29.1
     ...
 
-Código Básico
-    python
-
+Código Básico - Python
     import pandas as pd
     from heatwave_analyzer import HeatWaveAnalyzer
 
@@ -136,15 +132,17 @@ Código Básico
 ## 🔬 Métricas Científicas
 📏 HWMId (Heat Wave Magnitude Index daily)
 
-
 Métrica padrão na literatura científica calculada como:
-- HWMId = ∑(Tmax - Tthreshold) para todos os dias do evento
+
+    HWMId = ∑(Tmax - Tthreshold) para todos os dias do evento
+
 
 Onde:
 
     Tmax: temperatura máxima observada
 
     Tthreshold: limiar de temperatura para o dia do ano
+
 
 ## 📈 Outras Métricas Calculadas
 - Métrica	Descrição
@@ -155,17 +153,18 @@ Onde:
 - Frequência Anual	Número de eventos por ano
 - Tendência Decadal	Evolução das características ao longo de períodos de 10 anos
 
+
 ## 📊 Visualizações
 
 1. Mapa de Calor Temporal
 
-![Mapa de Calor Gerado](resultados_onda_calor/mapa_de_calor_temporal.png)
+![Mapa de Calor Gerado](resultados_ondas_calor/mapa_de_calor_temporal.png)
 
 Visualização das temperaturas máximas ao longo dos anos, com destaque para os períodos de onda de calor.
 
 2. Tendências Decadais
 
-![Tendencias Decadais](resultados_onda_calor/tendencias_decadais.png)
+![Tendencias Decadais](resultados_ondas_calor/tendencias_decadais.png)
 
 Série de gráficos mostrando a evolução de:
 
@@ -179,13 +178,14 @@ Série de gráficos mostrando a evolução de:
 
 3. Distribuição Mensal
 
-![Distribuição Mensal](resultados_onda_calor/distribuicao_mensal.png)
+![Distribuição Mensal](resultados_ondas_calor/distribuicao_mensal.png)
 
 Barras verticais mostrando em quais meses ocorrem mais dias de onda de calor.
 
-## 📁 Estrutura do Projeto
 
- heat-wave-analyzer/
+## 📁 Estrutura do Projeto
+```plaintext
+heat-wave-analyzer/
 │
 ├── heatwave_analyzer.py       # Classe principal com toda a lógica
 ├── requirements.txt           # Dependências do projeto
@@ -200,6 +200,7 @@ Barras verticais mostrando em quais meses ocorrem mais dias de onda de calor.
     └── graficos/              # Visualizações exportadas
         ├── mapa_calor.png
         └── ...
+```
 
 
 ## 🔍 Exemplo Prático
@@ -246,6 +247,7 @@ Interpretando os Resultados
 
         Evidências de aumento de intensidade ou frequência
 
+
 ## 🤝 Contribuição
 
 Contribuições são bem-vindas! Siga estes passos:
@@ -260,14 +262,17 @@ Contribuições são bem-vindas! Siga estes passos:
 
     Abra um Pull Request
 
+
 ## 📜 Licença
 
-Distribuído sob a licença MIT. Veja LICENSE para mais informações.
+- Distribuído sob a licença MIT. 
+- Veja LICENSE para mais informações.
+
 
 ## ✉️ Contato
 
 Para dúvidas científicas ou suporte técnico:
 
-    Email: [brunojatobadev@gmail.com]
+    Email: brunojatobadev@gmail.com
 
-    Issues: [https://github.com/brjatoba92/previsor_ondas_calor]
+    Issues: https://github.com/brjatoba92/previsor_ondas_calor
