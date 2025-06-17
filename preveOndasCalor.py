@@ -1,5 +1,4 @@
 # Importação das dependencias necessarias
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,6 +6,7 @@ import seaborn as sns
 from scipy import stats
 import calendar
 from datetime import datetime, timedelta
+import os
 
 # Configurações Iniciais
 plt.style.use('ggplot')
@@ -181,6 +181,63 @@ class HeatWaveAnalyzer:
         monthly_df['month_name'] = monthly_df.index.map(lambda x: calendar.month_abbr[x])
         return monthly_df
     
+    def save_heat_waves_to_csv(self, filepath='heat_waves_detected.csv'):
+        """Salva as ondas de calor detectadas em um arquivo CSV."""
+        if self.heat_waves is None:
+            self.detect_heat_waves()
+        
+        # Cria o diretório se não existir
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
+        
+        self.heat_waves.to_csv(filepath, index=False, encoding='utf-8-sig')
+        print(f"Ondas de calor salvas em: {filepath}")
+    
+    def save_climate_report_to_csv(self, directory='relatorios_climaticos'):
+        """Salva os componentes do relatório climático em arquivos CSV."""
+        if self.climate_report is None:
+            self.generate_climate_report()
+        
+        # Cria o diretório se não existir
+        os.makedirs(directory, exist_ok=True)
+
+        # Salva as ondas de calor detectadas
+        heat_waves_path = os.path.join(directory, "ondas_de_calor_detectadas.csv")
+        self.heat_waves.to_csv(heat_waves_path, index=False, encoding='utf-8-sig')
+        
+        # Salva o resumo do relatório
+        summary_data = {
+            'metric': [
+                'total_heat_waves', 'avg_duration', 'max_duration',
+                'avg_intensity', 'max_intensity', 'avg_hwmid', 'max_hwmid'
+            ],
+            'value': [
+                self.climate_report['total_heat_waves'],
+                self.climate_report['avg_duration'],
+                self.climate_report['max_duration'],
+                self.climate_report['avg_intensity'],
+                self.climate_report['max_intensity'],
+                self.climate_report['avg_hwmid'],
+                self.climate_report['max_hwmid']
+            ]
+        }
+        summary_df = pd.DataFrame(summary_data)
+        summary_path = os.path.join(directory, 'climate_report_summary.csv')
+        summary_df.to_csv(summary_path, index=False, encoding='utf-8-sig')
+        
+        # Salva a frequência anual
+        annual_path = os.path.join(directory, 'annual_frequency.csv')
+        self.climate_report['annual_frequency'].to_csv(annual_path, index=False, encoding='utf-8-sig')
+        
+        # Salva as tendências decadais
+        decadal_path = os.path.join(directory, 'decadal_trends.csv')
+        self.climate_report['decadal_trend'].to_csv(decadal_path, index=True, encoding='utf-8-sig')
+        
+        # Salva a distribuição mensal
+        monthly_path = os.path.join(directory, 'monthly_distribution.csv')
+        self.climate_report['monthly_distribution'].to_csv(monthly_path, index=False, encoding='utf-8-sig')
+        
+        print(f"Relatórios climáticos salvos no diretório: {directory}")
+    
     def plot_heat_map(self, save_path=None):
         """Gera um mapa de calor temporal das ondas de calor."""
         if self.heat_waves is None:
@@ -297,9 +354,13 @@ if __name__ == "__main__":
         'temp_max': temp_max_values  # Usar o array numpy modificado
     })
     
-    # Restante do código permanece igual...
+    # Cria o analisador
     analyzer = HeatWaveAnalyzer(temp_data, threshold_percentile=90, min_consecutive_days=3)
+    
+    # Detecta ondas de calor
     heat_waves = analyzer.detect_heat_waves()
+    
+    # Gera relatório climático
     report = analyzer.generate_climate_report()
     
     # Visualizações
@@ -309,13 +370,15 @@ if __name__ == "__main__":
     print(f"Intensidade média: {report['avg_intensity']:.1f} °C acumulados")
     print(f"Magnitude média (HWMId): {report['avg_hwmid']:.1f}")
     
-    import os
-
-    # Diretório para salvar os gráficos
-    output_dir = "graficos_ondas_calor"
+    # Diretório para salvar os resultados
+    output_dir = "resultados_ondas_calor"
     os.makedirs(output_dir, exist_ok=True)
 
-    # Caminhos dos arquivos de saída
+    # Agora só precisamos chamar save_climate_report_to_csv
+    climate_report_dir = os.path.join(output_dir, "relatorios_climaticos")
+    analyzer.save_climate_report_to_csv(climate_report_dir)
+    
+    # Caminhos dos gráficos
     heatmap_path = os.path.join(output_dir, "mapa_de_calor_temporal.png")
     trend_path = os.path.join(output_dir, "tendencias_decadais.png")
     monthly_dist_path = os.path.join(output_dir, "distribuicao_mensal.png")
