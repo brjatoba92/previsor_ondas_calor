@@ -181,85 +181,86 @@ class HeatWaveAnalyzer:
         monthly_df['month_name'] = monthly_df.index.map(lambda x: calendar.month_abbr[x])
         return monthly_df
     
-    def plot_heat_map(self):
+    def plot_heat_map(self, save_path=None):
         """Gera um mapa de calor temporal das ondas de calor."""
         if self.heat_waves is None:
             self.detect_heat_waves()
-            
-        # Cria uma matriz ano x dia do ano
+        
         years = sorted(self.data['year'].unique())
         heat_matrix = np.zeros((len(years), 366)) * np.nan
-        
+
         for i, year in enumerate(years):
             year_data = self.data[self.data['year'] == year]
             heat_matrix[i, :] = year_data.set_index('doy')['temp_max'].reindex(range(1, 367)).values
-            
-        # Plota o mapa de calor
+
         plt.figure(figsize=(15, 8))
         sns.heatmap(heat_matrix, cmap='YlOrRd', 
-                   xticklabels=30, yticklabels=5,
-                   cbar_kws={'label': 'Temperatura Máxima (°C)'})
-        
+                xticklabels=30, yticklabels=5,
+                cbar_kws={'label': 'Temperatura Máxima (°C)'})
+    
         plt.title('Mapa de Calor Temporal - Temperaturas Máximas Anuais')
         plt.xlabel('Dia do Ano')
         plt.ylabel('Ano')
         plt.yticks(rotation=0)
         plt.tight_layout()
-        plt.show()
+
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight', format='png')
+        plt.close()
     
-    def plot_decadal_trends(self):
+    def plot_decadal_trends(self, save_path=None):
         """Gráficos de tendências decadais das ondas de calor."""
         if self.climate_report is None:
             self.generate_climate_report()
-            
+        
         trends = self.climate_report['decadal_trend']
-        
         fig, axes = plt.subplots(2, 2, figsize=(15, 10))
-        
-        # Frequência
+
         trends['count'].plot(ax=axes[0, 0], marker='o', color='darkred')
         axes[0, 0].set_title('Frequência de Ondas de Calor por Década')
         axes[0, 0].set_ylabel('Número de Ondas')
-        
-        # Duração
+
         trends['duration'].plot(ax=axes[0, 1], marker='o', color='orangered')
         axes[0, 1].set_title('Duração Média por Década')
         axes[0, 1].set_ylabel('Dias')
-        
-        # Intensidade
+
         trends['intensity'].plot(ax=axes[1, 0], marker='o', color='orange')
         axes[1, 0].set_title('Intensidade Média por Década')
         axes[1, 0].set_ylabel('Intensidade Acumulada (°C)')
-        
-        # HWMId
+
         trends['hwmid'].plot(ax=axes[1, 1], marker='o', color='goldenrod')
         axes[1, 1].set_title('Magnitude Média (HWMId) por Década')
         axes[1, 1].set_ylabel('HWMId')
-        
+
         for ax in axes.flatten():
             ax.grid(True, linestyle='--', alpha=0.7)
             ax.set_xlabel('Década')
         
         plt.tight_layout()
-        plt.show()
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight', format='png')
+        plt.close()
     
-    def plot_monthly_distribution(self):
+    def plot_monthly_distribution(self, save_path=None):
         """Gráfico de distribuição mensal das ondas de calor."""
         if self.climate_report is None:
             self.generate_climate_report()
-            
-        monthly = self.climate_report['monthly_distribution']
         
+        monthly = self.climate_report['monthly_distribution']
+    
         plt.figure(figsize=(10, 6))
         sns.barplot(x='month_name', y='days', data=monthly, 
-                   color='orangered', order=calendar.month_abbr[1:])
-        
+                color='orangered', order=calendar.month_abbr[1:])
+    
         plt.title('Distribuição Mensal de Dias em Ondas de Calor')
         plt.xlabel('Mês')
         plt.ylabel('Total de Dias')
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.tight_layout()
-        plt.show()
+
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight', format='png')
+        plt.close()
 
 
 # Exemplo de uso
@@ -308,9 +309,21 @@ if __name__ == "__main__":
     print(f"Intensidade média: {report['avg_intensity']:.1f} °C acumulados")
     print(f"Magnitude média (HWMId): {report['avg_hwmid']:.1f}")
     
-    analyzer.plot_heat_map()
-    analyzer.plot_decadal_trends()
-    analyzer.plot_monthly_distribution()
+    import os
+
+    # Diretório para salvar os gráficos
+    output_dir = "graficos_ondas_calor"
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Caminhos dos arquivos de saída
+    heatmap_path = os.path.join(output_dir, "mapa_de_calor_temporal.png")
+    trend_path = os.path.join(output_dir, "tendencias_decadais.png")
+    monthly_dist_path = os.path.join(output_dir, "distribuicao_mensal.png")
+
+    # Geração dos gráficos e salvamento em arquivos PNG
+    analyzer.plot_heat_map(save_path=heatmap_path)
+    analyzer.plot_decadal_trends(save_path=trend_path)
+    analyzer.plot_monthly_distribution(save_path=monthly_dist_path)
     
     # Mostra as primeiras ondas de calor detectadas
     print("\nExemplo de ondas de calor detectadas:")
