@@ -1,10 +1,10 @@
-atualize este código para o readme: # 🌡️ Heat Wave Analyzer: Análise Avançada de Ondas de Calor
+# 🌡️ Heat Wave Analyzer: Análise Avançada de Ondas de Calor
 
-[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![Pandas](https://img.shields.io/badge/Pandas-1.3%2B-orange)](https://pandas.pydata.org/)
-[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-blue)](https://matplotlib.org/)
-[![Seaborn](https://img.shields.io/badge/Seaborn-0.11%2B-red)](https://seaborn.pydata.org/)
-[![SciPy](https://img.shields.io/badge/SciPy-1.7%2B-blueviolet)](https://www.scipy.org/)
+- [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)  
+- [![Pandas](https://img.shields.io/badge/Pandas-1.3%2B-orange)](https://pandas.pydata.org/)  
+- [![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-blue)](https://matplotlib.org/)  
+- [![Seaborn](https://img.shields.io/badge/Seaborn-0.11%2B-red)](https://seaborn.pydata.org/)  
+- [![SciPy](https://img.shields.io/badge/SciPy-1.7%2B-blueviolet)](https://www.scipy.org/)
 
 O **Heat Wave Analyzer** é uma solução científica completa para detecção, análise e visualização de ondas de calor em séries temporais climáticas. Desenvolvido para pesquisadores, meteorologistas e cientistas de dados, este pacote oferece ferramentas robustas para estudar eventos de calor extremo com rigor acadêmico.
 
@@ -21,7 +21,7 @@ O **Heat Wave Analyzer** é uma solução científica completa para detecção, 
 9. [Licença](#-licença)
 10. [Contato](#-contato)
 
-🌟 Funcionalidades Principais
+## 🌟 Funcionalidades Principais
 🔍 Detecção Avançada de Ondas de Calor
 
     Algoritmo baseado em percentis móveis (janela de 15 dias)
@@ -58,7 +58,7 @@ O **Heat Wave Analyzer** é uma solução científica completa para detecção, 
 
     Estrutura organizada em diretórios
 
-⚙️ Instalação
+## ⚙️ Instalação
 Pré-requisitos
 
     Python 3.8 ou superior
@@ -69,25 +69,23 @@ Passo a Passo
 
     Clone o repositório:
 
-bash
+Passo a Passo
 
-git clone https://github.com/brjatoba92/previsor_ondas_calor.git
-cd heat-wave-analyzer
-    Crie um ambiente virtual (recomendado):
+    git clone https://github.com/brjatoba92/previsor_ondas_calor.git 
+    cd heat-wave-analyzer 
 
-bash
+Crie um ambiente virtual (recomendado):
 
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate  # Windows
+    python -m venv venv
+    source venv/bin/activate  # Linux/Mac
+    venv\Scripts\activate  # Windows
 
-    Instale as dependências:
+Instale as dependências:
 
-bash
+    pip install -r requirements.txt
 
-pip install -r requirements.txt
 
-🚀 Como Usar
+## 🚀 Como Usar
 Estrutura Básica dos Dados
 
 Seu arquivo de dados deve conter:
@@ -131,7 +129,7 @@ report = analyzer.generate_climate_report()
 analyzer.save_climate_report_to_csv('resultados/relatorios')
 analyzer.plot_heat_map('resultados/graficos/mapa_calor.png')
 
-🔬 Métricas Científicas
+## 🔬 Métricas Científicas
 📏 HWMId (Heat Wave Magnitude Index daily)
 
 Métrica padrão na literatura científica calculada como:
@@ -145,7 +143,7 @@ Onde:
 
     Tthreshold: limiar de temperatura para o dia do ano
 
-📈 Outras Métricas Calculadas
+## 📈 Outras Métricas Calculadas
 Métrica	Descrição
 Duração	Número de dias consecutivos acima do limiar
 Intensidade	Soma acumulada do excesso de temperatura (Tmax - Tthreshold)
@@ -154,15 +152,17 @@ Temperatura Média	Média das temperaturas máximas durante o evento
 Frequência Anual	Número de eventos por ano
 Tendência Decadal	Evolução das características ao longo de períodos de 10 anos
 
-📊 Visualizações
+## 📊 Visualizações
+
 1. Mapa de Calor Temporal
 
-https://via.placeholder.com/600x300?text=Heat+Map+Example
+![Mapa de Calor Gerado](resultados_onda_calor/mapa_de_calor_temporal.png)
 
 Visualização das temperaturas máximas ao longo dos anos, com destaque para os períodos de onda de calor.
+
 2. Tendências Decadais
 
-https://via.placeholder.com/600x300?text=Trend+Analysis
+![Tendencias Decadais](resultados_onda_calor/tendencias_decadais.png)
 
 Série de gráficos mostrando a evolução de:
 
@@ -176,12 +176,11 @@ Série de gráficos mostrando a evolução de:
 
 3. Distribuição Mensal
 
-https://via.placeholder.com/600x300?text=Monthly+Distribution
+![Distribuição Mensal](resultados_onda_calor/distribuicao_mensal.png)
 
 Barras verticais mostrando em quais meses ocorrem mais dias de onda de calor.
-📁 Estrutura do Projeto
-text
 
+## 📁 Estrutura do Projeto
 heat-wave-analyzer/
 │
 ├── heatwave_analyzer.py       # Classe principal com toda a lógica
@@ -198,7 +197,7 @@ heat-wave-analyzer/
         ├── mapa_calor.png
         └── ...
 
-🔍 Exemplo Prático
+## 🔍 Exemplo Prático
 Análise de Dados Climáticos de 40 Anos
 python
 
@@ -237,7 +236,7 @@ Interpretando os Resultados
 
         Evidências de aumento de intensidade ou frequência
 
-🤝 Contribuição
+## 🤝 Contribuição
 
 Contribuições são bem-vindas! Siga estes passos:
 
@@ -251,10 +250,11 @@ Contribuições são bem-vindas! Siga estes passos:
 
     Abra um Pull Request
 
-📜 Licença
+## 📜 Licença
 
 Distribuído sob a licença MIT. Veja LICENSE para mais informações.
-✉️ Contato
+
+## ✉️ Contato
 
 Para dúvidas científicas ou suporte técnico:
 
