@@ -171,3 +171,84 @@ class HeatWaveAnalyzer:
         monthly_df = monthly_df.groupby('month').sum().reindex(range(1,13), fill_value=0)
         monthly_df['month_name'] = monthly_df.index.map(lambda x: calendar.month_abbr[x])
         return monthly_df
+    
+    def plot_heat_map(self):
+        """Plota um mapa de calor das ondas de calor."""
+        if self.heat_waves is None:
+            self.detect_heat_waves()
+        
+        # cria uma matriz ano x dia do ano
+        years = sorted(self.data['year'].unique())
+        heat_matrix = np.zeros((len(years), 366)) * np.nan
+
+        for i, year in enumerate(years):
+            year_data = self.data[self.data['year'] == year]
+            heat_matrix[i, :] = year_data.set_index('day_of_year')['temp_max'].reindex(range(1, 367)).values
+
+        # plota o mapa de calor
+        plt.figure(figsize=(15, 8))
+        sns.heatmap(heat_matrix, cmap='YlOrRd',
+                    xticklabels=30, yticklabels=5,                  
+                    cbar_kws={'label': 'Temperatura Máxima (°C)'})
+        
+        plt.title('Mapa de calor das ondas de calor', fontsize=20)
+        plt.xlabel('Dias do ano', fontsize=16)
+        plt.ylabel('Anos', fontsize=16)
+        plt.yticks(rotation=0, fontsize=12)
+        plt.tight_layout()
+        plt.show()
+    
+    def plot_decadal_trends(self):
+        """Plota graficos de tendencias decadais de ondas de calor"""
+        if self.climate_report is None:
+            self.generate_climate_report()
+        
+        trends = self.climate_report['decadal_trend']
+
+        fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+
+        #Frequencia
+        trends['count'].plot(ax=axes[0, 0], marker='o', color='darkred')
+        axes[0,0].set_title('Frequência de Ondas de Calor por Década', fontsize=16)
+        axes[0,0].set_ylabel('Numero de Ondas', fontsize=14)
+
+        #Diração
+        trends['duration'].plot(ax=axes[0, 1], marker='o', color='orangered')
+        axes[0,1].set_title('Duração das Ondas de Calor por Década', fontsize=16)
+        axes[0,1].set_ylabel('Dias', fontsize=14)
+
+        #Intensidade
+        trends['intensity'].plot(ax=axes[1, 0], marker='o', color='orange')
+        axes[1,0].set_title('Intensidade Média por Década', fontsize=16)
+        axes[1,0].set_ylabel('Temperatura (°C)', fontsize=14)
+
+        #HWMId
+        trends['hwmid'].plot(ax=axes[1, 1], marker='o', color='goldenrod')
+        axes[1,1].set_title('Magnitude Média (HWMId) por Década (°C)', fontsize=16)
+        axes[1,1].set_ylabel('Temperatura (°C)', fontsize=14)
+
+        for ax in axes.flatten():
+            ax.grid(True, linestyle='--', alpha=0.7)
+            ax.set_xlabel('Década', fontsize=14)
+        
+        plt.tight_layout()
+        plt.show()
+    
+    def plot_monthly_distribution(self):
+        """Plota a distribuição mensal das ondas de calor."""
+        if self.climate_report is None:
+            self.generate_climate_report()
+        
+        monthly = self.climate_report['monthly_distribution']
+        
+        plt.figure(figsize=(10, 6))
+        sns.barplot(x='month_name', y='days', data=monthly,
+                    color='orangered', order=calendar.month_abbr[1:])
+        
+        plt.title('Distribuição Mensal das Ondas de Calor', fontsize=16)
+        plt.xlabel('Mês', fontsize=14)
+        plt.ylabel('Total de Dias', fontsize=14)
+        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.tight_layout()
+        plt.show()
+    
