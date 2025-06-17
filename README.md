@@ -95,37 +95,40 @@ Seu arquivo de dados deve conter:
     Coluna temp_max (float): temperaturas máximas diárias
 
 Exemplo mínimo:
-csv
 
-date,temp_max
-1980-01-01,28.5
-1980-01-02,29.1
-...
+    csv
+
+    date,temp_max
+    1980-01-01,28.5
+    1980-01-02,29.1
+    ...
 
 Código Básico
-python
 
-import pandas as pd
-from heatwave_analyzer import HeatWaveAnalyzer
+    python
 
-# 1. Carregar dados
+    import pandas as pd
+    from heatwave_analyzer import HeatWaveAnalyzer
+
+
+### 1. Carregar dados
 data = pd.read_csv('dados_climaticos.csv')
 data['date'] = pd.to_datetime(data['date'])
 
-# 2. Criar analisador (parâmetros padrão científicos)
+### 2. Criar analisador (parâmetros padrão científicos)
 analyzer = HeatWaveAnalyzer(
     data,
     threshold_percentile=90,  # percentil para limiar
     min_consecutive_days=3    # duração mínima da onda
 )
 
-# 3. Detectar ondas de calor
+### 3. Detectar ondas de calor
 heat_waves = analyzer.detect_heat_waves()
 
-# 4. Gerar relatório completo
+### 4. Gerar relatório completo
 report = analyzer.generate_climate_report()
 
-# 5. Exportar resultados
+### 5. Exportar resultados
 analyzer.save_climate_report_to_csv('resultados/relatorios')
 analyzer.plot_heat_map('resultados/graficos/mapa_calor.png')
 
@@ -144,13 +147,13 @@ Onde:
     Tthreshold: limiar de temperatura para o dia do ano
 
 ## 📈 Outras Métricas Calculadas
-Métrica	Descrição
-Duração	Número de dias consecutivos acima do limiar
-Intensidade	Soma acumulada do excesso de temperatura (Tmax - Tthreshold)
-Temperatura Máxima	Valor máximo observado durante o evento
-Temperatura Média	Média das temperaturas máximas durante o evento
-Frequência Anual	Número de eventos por ano
-Tendência Decadal	Evolução das características ao longo de períodos de 10 anos
+- Métrica	Descrição
+- Duração	Número de dias consecutivos acima do limiar
+- Intensidade	Soma acumulada do excesso de temperatura (Tmax - Tthreshold)
+- Temperatura Máxima	Valor máximo observado durante o evento
+- Temperatura Média	Média das temperaturas máximas durante o evento
+- Frequência Anual	Número de eventos por ano
+- Tendência Decadal	Evolução das características ao longo de períodos de 10 anos
 
 ## 📊 Visualizações
 
@@ -181,40 +184,47 @@ Série de gráficos mostrando a evolução de:
 Barras verticais mostrando em quais meses ocorrem mais dias de onda de calor.
 
 ## 📁 Estrutura do Projeto
-heat-wave-analyzer/
-│
-├── heatwave_analyzer.py       # Classe principal com toda a lógica
-├── requirements.txt           # Dependências do projeto
-├── README.md                  # Este arquivo
-├── dados/                     # Pasta para dados de entrada (opcional)
-│   └── exemplo_clima.csv      
-└── resultados/                # Pasta gerada automaticamente
-    ├── relatorios/            # Relatórios em CSV
-    │   ├── annual_frequency.csv
-    │   ├── climate_report_summary.csv
-    │   └── ...
-    └── graficos/              # Visualizações exportadas
-        ├── mapa_calor.png
-        └── ...
+
+    heat-wave-analyzer/
+ │
+ ├── heatwave_analyzer.py       # Classe principal com toda a lógica
+ ├── requirements.txt           # Dependências do projeto
+ ├── README.md                  # Este arquivo
+ ├── dados/                     # Pasta para dados de entrada (opcional)
+ │   └── exemplo_clima.csv      
+ └── resultados/                # Pasta gerada automaticamente
+     ├── relatorios/            # Relatórios em CSV
+     │   ├── annual_frequency.csv
+     │   ├── climate_report_summary.csv
+     │   └── ...
+     └── graficos/              # Visualizações exportadas
+         ├── mapa_calor.png
+         └── ...
+
 
 ## 🔍 Exemplo Prático
-Análise de Dados Climáticos de 40 Anos
-python
+- Análise de Dados Climáticos de 40 Anos
 
 # Configuração avançada
-analyzer = HeatWaveAnalyzer(
+
+    analyzer = HeatWaveAnalyzer(
     data,
     threshold_percentile=92,  # Limiar mais rigoroso
     min_consecutive_days=4    # Eventos mais prolongados
 )
 
+
 # Análise completa
-heat_waves = analyzer.detect_heat_waves()
-report = analyzer.generate_climate_report()
+
+    heat_waves = analyzer.detect_heat_waves()
+    report = analyzer.generate_climate_report()
+
 
 # Exportação organizada
-analyzer.save_climate_report_to_csv('resultados/relatorio_avancado')
-analyzer.plot_decadal_trends('resultados/graficos/tendencias_decadais.png')
+
+    analyzer.save_climate_report_to_csv('resultados/relatorio_avancado')
+    analyzer.plot_decadal_trends('resultados/graficos/tendencias_decadais.png')
+
 
 Interpretando os Resultados
 
