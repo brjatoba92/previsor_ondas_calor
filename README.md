@@ -89,13 +89,11 @@ Instale as dependências:
 Estrutura Básica dos Dados
 
 Seu arquivo de dados deve conter:
-
     Coluna date (datetime): datas das observações
 
     Coluna temp_max (float): temperaturas máximas diárias
 
 Exemplo mínimo:
-
     csv
 
     date,temp_max
@@ -104,7 +102,6 @@ Exemplo mínimo:
     ...
 
 Código Básico
-
     python
 
     import pandas as pd
@@ -112,33 +109,36 @@ Código Básico
 
 
 ### 1. Carregar dados
-data = pd.read_csv('dados_climaticos.csv')
-data['date'] = pd.to_datetime(data['date'])
+    data = pd.read_csv('dados_climaticos.csv')
+    data['date'] = pd.to_datetime(data['date'])
+
 
 ### 2. Criar analisador (parâmetros padrão científicos)
-analyzer = HeatWaveAnalyzer(
-    data,
-    threshold_percentile=90,  # percentil para limiar
-    min_consecutive_days=3    # duração mínima da onda
+    analyzer = HeatWaveAnalyzer(
+        data,
+        threshold_percentile=90,  # percentil para limiar
+        min_consecutive_days=3    # duração mínima da onda
 )
 
 ### 3. Detectar ondas de calor
-heat_waves = analyzer.detect_heat_waves()
+    heat_waves = analyzer.detect_heat_waves()
+
 
 ### 4. Gerar relatório completo
-report = analyzer.generate_climate_report()
+    report = analyzer.generate_climate_report()
+
 
 ### 5. Exportar resultados
-analyzer.save_climate_report_to_csv('resultados/relatorios')
-analyzer.plot_heat_map('resultados/graficos/mapa_calor.png')
+    analyzer.save_climate_report_to_csv('resultados/relatorios')
+    analyzer.plot_heat_map('resultados/graficos/mapa_calor.png')
+
 
 ## 🔬 Métricas Científicas
 📏 HWMId (Heat Wave Magnitude Index daily)
 
-Métrica padrão na literatura científica calculada como:
-text
 
-HWMId = ∑(Tmax - Tthreshold) para todos os dias do evento
+Métrica padrão na literatura científica calculada como:
+- HWMId = ∑(Tmax - Tthreshold) para todos os dias do evento
 
 Onde:
 
@@ -185,21 +185,21 @@ Barras verticais mostrando em quais meses ocorrem mais dias de onda de calor.
 
 ## 📁 Estrutura do Projeto
 
-    heat-wave-analyzer/
- │
- ├── heatwave_analyzer.py       # Classe principal com toda a lógica
- ├── requirements.txt           # Dependências do projeto
- ├── README.md                  # Este arquivo
- ├── dados/                     # Pasta para dados de entrada (opcional)
- │   └── exemplo_clima.csv      
- └── resultados/                # Pasta gerada automaticamente
-     ├── relatorios/            # Relatórios em CSV
-     │   ├── annual_frequency.csv
-     │   ├── climate_report_summary.csv
-     │   └── ...
-     └── graficos/              # Visualizações exportadas
-         ├── mapa_calor.png
-         └── ...
+ heat-wave-analyzer/
+│
+├── heatwave_analyzer.py       # Classe principal com toda a lógica
+├── requirements.txt           # Dependências do projeto
+├── README.md                  # Este arquivo
+├── dados/                     # Pasta para dados de entrada (opcional)
+│   └── exemplo_clima.csv      
+└── resultados/                # Pasta gerada automaticamente
+    ├── relatorios/            # Relatórios em CSV
+    │   ├── annual_frequency.csv
+    │   ├── climate_report_summary.csv
+    │   └── ...
+    └── graficos/              # Visualizações exportadas
+        ├── mapa_calor.png
+        └── ...
 
 
 ## 🔍 Exemplo Prático
