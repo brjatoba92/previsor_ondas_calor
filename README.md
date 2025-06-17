@@ -1,35 +1,25 @@
-🌡️ Heat Wave Analyzer: Análise Avançada de Ondas de Calor
+atualize este código para o readme: # 🌡️ Heat Wave Analyzer: Análise Avançada de Ondas de Calor
 
-https://img.shields.io/badge/Python-3.8%252B-blue
-https://img.shields.io/badge/Pandas-1.3%252B-orange
-https://img.shields.io/badge/Matplotlib-3.4%252B-blue
-https://img.shields.io/badge/Seaborn-0.11%252B-red
-https://img.shields.io/badge/SciPy-1.7%252B-blueviolet
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-1.3%2B-orange)](https://pandas.pydata.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.4%2B-blue)](https://matplotlib.org/)
+[![Seaborn](https://img.shields.io/badge/Seaborn-0.11%2B-red)](https://seaborn.pydata.org/)
+[![SciPy](https://img.shields.io/badge/SciPy-1.7%2B-blueviolet)](https://www.scipy.org/)
 
-O Heat Wave Analyzer é uma solução científica completa para detecção, análise e visualização de ondas de calor em séries temporais climáticas. Desenvolvido para pesquisadores, meteorologistas e cientistas de dados, este pacote oferece ferramentas robustas para estudar eventos de calor extremo com rigor acadêmico.
+O **Heat Wave Analyzer** é uma solução científica completa para detecção, análise e visualização de ondas de calor em séries temporais climáticas. Desenvolvido para pesquisadores, meteorologistas e cientistas de dados, este pacote oferece ferramentas robustas para estudar eventos de calor extremo com rigor acadêmico.
 
-📌 Índice
+## 📌 Índice
 
-    Funcionalidades Principais
-
-    Instalação
-
-    Como Usar
-
-    Métricas Científicas
-
-    Visualizações
-
-    Estrutura do Projeto
-
-    Exemplo Prático
-
-    Contribuição
-
-    Licença
-
-    Contato
-
+1. [Funcionalidades Principais](#-funcionalidades-principais)
+2. [Instalação](#-instalação)
+3. [Como Usar](#-como-usar)
+4. [Métricas Científicas](#-métricas-científicas)
+5. [Visualizações](#-visualizações)
+6. [Estrutura do Projeto](#-estrutura-do-projeto)
+7. [Exemplo Prático](#-exemplo-prático)
+8. [Contribuição](#-contribuição)
+9. [Licença](#-licença)
+10. [Contato](#-contato)
 
 🌟 Funcionalidades Principais
 🔍 Detecção Avançada de Ondas de Calor
